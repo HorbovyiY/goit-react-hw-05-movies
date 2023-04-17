@@ -10,10 +10,8 @@ const Home = () => {
             .then((response) => response.json())
             .then((resp) => resp.results)
             .then((res) => {
-                console.log(res)
                 setMovies(res)
             })
-            
             .catch((error)=>
                 console.log(error)
             )
@@ -22,7 +20,7 @@ const Home = () => {
     return (
         <ul>
         {movies.map(
-                movie => <li><Link to={movie.id}>{movie.title}</Link></li>
+            movie => <li key={movie.id}><Link to={`movies/${movie.id}`}>{movie.title}</Link></li>
             )}
         </ul>
     )
