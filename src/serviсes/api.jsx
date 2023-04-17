@@ -8,3 +8,7 @@ export const findPopularMovies=() => {
 export const findMovieById = (id) => { 
     return fetch(`${BASE_URL}movie/${id}?api_key=${KEY}`)
 }
+
+export const findCastMovieById = (id) => { 
+    return fetch(`${BASE_URL}movie/${id}/credits?api_key=${KEY}`)
+}

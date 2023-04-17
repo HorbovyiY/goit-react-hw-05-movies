@@ -5,14 +5,12 @@ import * as API from "../serviсes/api";
 const MovieDetails = () => { 
     const {id} = useParams();
     const [movie, setMovie] = useState('');
-    console.log(id)
 
     useEffect(() => {
         API.findMovieById(id)
             .then((response) => response.json())
             .then((res) => {
                 setMovie(res)
-                console.log(res)
             })
             .catch((error)=>
                 console.log(error)
@@ -22,7 +20,8 @@ const MovieDetails = () => {
 
     return (
         <div>
-            {(movie!=='')&&(<>
+            {(movie !== '') && (
+                <>
                     <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} alt={movie.original_title} />
                     <h2>{movie.original_title}</h2>
                     <span>Score: {movie.vote_average}</span>
@@ -31,7 +30,7 @@ const MovieDetails = () => {
                     <span>Genres</span>
                     <span>{movie.genres.map((genre) => { return genre.name})}</span>
                     <span>Additional information</span>
-            </>)}
+                </>)}
             <ul>
                 <li>
                     <Link to="cast">Cast</Link>
