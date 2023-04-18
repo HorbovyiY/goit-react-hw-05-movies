@@ -24,12 +24,12 @@ const MovieDetails = () => {
                 <>
                     <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} alt={movie.original_title} />
                     <h2>{movie.original_title}</h2>
-                    <span>Score: {movie.vote_average}</span>
-                    <span>Overview</span>
-                    <span>{movie.overview}</span>
-                    <span>Genres</span>
-                    <span>{movie.genres.map((genre) => { return genre.name})}</span>
-                    <span>Additional information</span>
+                    <p>Score: {movie.vote_average}</p>
+                    <p>Overview</p>
+                    <p>{movie.overview}</p>
+                    <p>Genres</p>
+                    <p>{movie.genres.map((genre) => {return genre.name+' '})}</p>
+                    <p>Additional information</p>
                 </>)}
             <ul>
                 <li>
