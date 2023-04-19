@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import { Link, Outlet, useLocation, useParams } from "react-router-dom"
 import * as API from "../serviсes/api";
 
@@ -42,7 +42,9 @@ const MovieDetails = () => {
                     <Link to="reviews">Reviews</Link>
                 </li>
             </ul>
-            <Outlet/>
+            <Suspense fallback={<div>Loading...</div>}>
+                <Outlet />
+            </Suspense>
         </div>)
 }
 
