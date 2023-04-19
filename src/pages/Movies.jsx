@@ -1,11 +1,27 @@
-import { useState } from "react"
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react"
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 
 import * as API from "../serviсes/api";
 
 const Movies = () => { 
-    const [query, setQuery] = useState('')
-    const [movies, setMovies] = useState('')
+    const [query, setQuery] = useState('');
+    const [movies, setMovies] = useState('');
+    const [searchParams, setSearchParams] = useSearchParams();
+    const q = searchParams.get('q');
+    const location = useLocation();
+    
+    useEffect(() => { 
+        if (q === null) { return}
+        API.findMovieBySearch(q)
+            .then((response) => response.json())
+            .then((resp) => resp.results)
+            .then((res) => {
+                setMovies(res)
+            })
+            .catch((error)=>
+                console.log(error)
+        )
+    },[q])
 
     const handleChange = (e) => { 
         setQuery(e.target.value)
@@ -15,16 +31,18 @@ const Movies = () => {
         e.preventDefault();
 
         API.findMovieBySearch(query)
-            .then((response) => response.json())
-            .then((resp) => resp.results)
-            .then((res) => {
-                setMovies(res)
-            })
-            .catch((error)=>
-                console.log(error)
-        )
+                .then((response) => response.json())
+                .then((resp) => resp.results)
+                .then((res) => {
+                    setMovies(res)
+                })
+                .catch((error) =>
+                    console.log(error)
+                )
+            setSearchParams({ q: query })
+            setQuery('');
         
-        setQuery('')
+        if (query === '') { setSearchParams({})}
     }
 
 
@@ -42,7 +60,7 @@ const Movies = () => {
             {(movies !== '') && (
                 <ul>
                     {movies.map(
-                        movie => <li key={movie.id}><Link to={`${movie.id}`}>{movie.title}</Link></li>
+                        movie => <li key={movie.id}><Link to={`${movie.id}`} state={{from: location}}>{movie.title}</Link></li>
                     )}
                 </ul>)}
         </>
